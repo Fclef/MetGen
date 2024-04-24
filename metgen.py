@@ -38,17 +38,17 @@ from sklearn.decomposition import PCA
 
 seed = randint(0,100)
 # load data
-f = open('/ix/yufeihuang/timothy/Disentanglement/data/met_data/METgen_c19_g7312_data.pckl', 'rb')
+f = open('./data/met_data/METgen_c19_g7312_data.pckl', 'rb')
 data = pickle.load(f)
 cancer_GE, tissue_GE, sampled_true, sampled_false, cancer_label,target_label, pos_label, tissue_label = data[0], data[2], data[6], data[7], data[1], data[4], data[5], data[3]
 f.close()
 
-m500_annotation = pd.read_table('/ix/yufeihuang/timothy/Disentanglement/data/M.meta.plus.txt')
+m500_annotation = pd.read_table('./data/M.meta.plus.txt')
 primary = m500_annotation["cohort"].values
 cls_tissue  = m500_annotation["biopsy_tissue"].values
 label_encoder = LabelEncoder()
 
-f = open('/ix/yufeihuang/timothy/Disentanglement/data/m500_7312_code.pckl', 'rb')
+f = open('./data/m500_7312_code.pckl', 'rb')
 data = pickle.load(f)
 met_code = data
 f.close()
@@ -106,15 +106,7 @@ print('data preprocess is done!')
 indices = np.arange(label.shape[0])
 np.random.shuffle(indices)
 cancer, tissue, target, label, eva_label, tissue_label = cancer[indices], tissue[indices], target[indices], label[indices], eva_label[indices], tissue_label[indices]
-# # f = open('/home/timothy/PycharmProjects/Disentanglement/data/met_data/data.pckl', 'wb')
-# f = open('/home/timothy/PycharmProjects/Disentanglement/data/met_data/METgen_19_tr_data_7312.pckl', 'wb')
-# pickle.dump([cancer, tissue, target, label, eva_label, tissue_label], f, protocol=4)
-# f.close()
-# f = open('/home/timothy/PycharmProjects/Disentanglement/data/met_data/METgen_19_tr_data_7312.pckl', 'rb')
 
-# data = pickle.load(f)
-# cancer, tissue, target, label, eva_label, tissue_label = data[0], data[1], data[2], data[3], data[4], data[5]
-# f.close()
 #build CLS for cancer
 def cls(nb_classes):
     input_main = Input((100,))
